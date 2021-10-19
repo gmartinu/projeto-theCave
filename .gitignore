@@ -1,3 +1,4 @@
 api/env
 pyapi/env
 __pycache__
+web/.vscode/settings.json
