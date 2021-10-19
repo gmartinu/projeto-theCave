@@ -1,9 +1,10 @@
 import { Face, LockOutlined } from "@mui/icons-material";
 import { Grid, InputAdornment, Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
-import { Paper, TextField } from "components";
+import { Button, Paper, TextField } from "components";
 import React from "react";
 import { handleChange } from "utils";
+import { AppContext } from "index";
 
 const BoxTitle = styled(Box)(({ theme }) => ({
   borderRadius: theme.spacing(1),
@@ -19,7 +20,7 @@ const BoxTitle = styled(Box)(({ theme }) => ({
 }));
 
 const BoxContent = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(0, 4, 2, 4),
+  padding: theme.spacing(0, 2, 2, 2),
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
@@ -29,7 +30,8 @@ const Title = styled(Typography)(({ theme }) => ({
   fontWeight: "bold",
 }));
 
-function AdminAuth() {
+function AdminAuth({ history }) {
+  const { snack } = React.useContext(AppContext);
   const [state, setState] = React.useState({
     username: "",
     password: "",
@@ -37,6 +39,11 @@ function AdminAuth() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (state.username && state.password) {
+      snack.success("Sucesso ao Logar!");
+    } else {
+      snack.error("Usuário ou Senha Inválidos :( ");
+    }
   };
 
   return (
@@ -75,7 +82,11 @@ function AdminAuth() {
                     </InputAdornment>
                   ),
                 }}
+                style={{ marginBottom: 10 }}
               />
+              <Button fullWidth variant="contained" color="primary">
+                LOGIN
+              </Button>
             </BoxContent>
           </form>
         </Paper>
