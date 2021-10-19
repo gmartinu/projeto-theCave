@@ -1,0 +1,52 @@
+::-webkit-scrollbar {
+  width: 5px;
+  border: 5px solid white;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #b0b0b0;
+  border-radius: 12px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+/* Buttons */
+
+/* ::-webkit-scrollbar-button:single-button:vertical {
+    background-color: #f1f1f1;
+    height: 28px;
+    border-style: solid
+} */
+
+/* Up */
+/* ::-webkit-scrollbar-button:single-button:vertical:decrement {
+    background:
+        linear-gradient(120deg, #ffffff 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(240deg, #ffffff 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(0deg, #ffffff 30%, rgba(0, 0, 0, 0) 31%);
+    background-color: #727272;
+    border-color: transparent transparent transparent transparent;
+    transition-duration: 3s;
+}
+
+::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
+    background-color: #b0b0b0;
+} */
+
+/* Down */
+/* ::-webkit-scrollbar-button:single-button:vertical:increment {
+    background:
+        linear-gradient(300deg, #ffffff 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(60deg, #ffffff 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(180deg, #ffffff 30%, rgba(0, 0, 0, 0) 31%);
+    background-color: #727272;
+    border-color: transparent transparent transparent transparent;
+    transition-duration: 3s;
+}
+
+::-webkit-scrollbar-button:vertical:single-button:vertical:increment:hover {
+    background-color: #b0b0b0;
+} */
