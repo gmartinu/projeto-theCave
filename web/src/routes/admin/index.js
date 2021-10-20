@@ -1,4 +1,4 @@
-import { AuthPage } from "views/admin";
+import { AuthPage, DashboardPage } from "views/admin";
 
 const routes = [
   {
@@ -7,6 +7,12 @@ const routes = [
     name: "Login",
     component: AuthPage,
     layout: "/auth",
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: DashboardPage,
+    layout: "/admin",
   },
 ];
 

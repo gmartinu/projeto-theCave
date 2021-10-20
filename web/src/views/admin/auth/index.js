@@ -41,6 +41,7 @@ function AdminAuth({ history }) {
     e.preventDefault();
     if (state.username && state.password) {
       snack.success("Sucesso ao Logar!");
+      history.push("/admin/dashboard");
     } else {
       snack.error("Usuário ou Senha Inválidos :( ");
     }
@@ -84,7 +85,12 @@ function AdminAuth({ history }) {
                 }}
                 style={{ marginBottom: 10 }}
               />
-              <Button fullWidth variant="contained" color="primary">
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+              >
                 LOGIN
               </Button>
             </BoxContent>
