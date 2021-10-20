@@ -99,20 +99,18 @@ class Agendamento(models.Model):
                  (5, 'Cancelado')),
         null=True, blank=True
     )
-    cliente = models.OneToOneField(
+    cliente = models.ManyToManyField(
         'core.Pessoa',
-        on_delete=models.PROTECT,
+        # on_delete=models.PROTECT,
         related_name='cliente_agendamentos',
         default=None,
-        null=True,
         blank=True
     )
-    funcionario = models.OneToOneField(
+    funcionario = models.ManyToManyField(
         'core.Pessoa',
-        on_delete=models.PROTECT,
+        # on_delete=models.PROTECT,
         related_name='funcionario_agendamentos',
         default=None,
-        null=True,
         blank=True
     )
     pagamentos = models.ManyToManyField(
@@ -120,7 +118,6 @@ class Agendamento(models.Model):
         # on_delete=models.PROTECT,
         related_name='agendamento',
         default=None,
-        null=True,
         blank=True
     )
     servicos = models.ManyToManyField(
@@ -128,6 +125,5 @@ class Agendamento(models.Model):
         # on_delete=models.PROTECT,
         related_name='agendamento',
         default=None,
-        null=True,
         blank=True
     )
