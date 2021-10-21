@@ -1,4 +1,7 @@
+import { AutoStories, Dashboard } from "@mui/icons-material";
 import { AuthPage, DashboardPage } from "views/admin";
+
+import CadastrosViews from "./cadastros";
 
 const routes = [
   {
@@ -12,7 +15,15 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: DashboardPage,
+    Icon: Dashboard,
     layout: "/admin",
+  },
+  {
+    collapse: true,
+    name: "Cadastro",
+    state: "CadastroscCollapse",
+    views: CadastrosViews,
+    Icon: AutoStories,
   },
 ];
 
