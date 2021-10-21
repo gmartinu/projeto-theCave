@@ -49,6 +49,7 @@ function AdminAuth({ history }) {
         .login(state)
         .then((res) => {
           snack.success("Sucesso ao Logar!");
+          localStorage.setItem("token", `${res.token}`);
           history.push("/admin/dashboard");
         })
         .catch((err) => {

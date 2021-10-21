@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Redirect } from "react-router-dom";
 import { getActiveRoute, getCollapseStates, getRoutes } from "utils";
-import { styled } from "@mui/system";
+import { Box, styled } from "@mui/system";
 import { useHistory } from "react-router-dom";
 import { AdminRotes } from "routes";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -23,15 +23,16 @@ import {
 } from "@mui/material";
 import { ExpandLess, ExpandMore, Menu } from "@mui/icons-material";
 
+const drawerWidth = 240;
+
 const Root = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.primary[100],
+  // width: `calc(100% - ${drawerWidth})`,
   height: "100%",
   display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
+  // justifyContent: "center",
+  // alignItems: "center",
 }));
-
-const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -233,10 +234,13 @@ export default function Admin() {
         <Divider />
         {createLinks(AdminRotes)}
       </Drawer>
-      <Switch>
-        {getRoutes("/admin", history, AdminRotes)}
-        <Redirect from="/admin" to="/admin/login" />
-      </Switch>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <DrawerHeader />
+        <Switch>
+          {getRoutes("/admin", history, AdminRotes)}
+          <Redirect from="/admin" to="/admin/login" />
+        </Switch>
+      </Box>
     </Root>
   );
 }
