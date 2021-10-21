@@ -5,6 +5,7 @@ import { Button, Paper, TextField } from "components";
 import React from "react";
 import { handleChange } from "utils";
 import { AppContext } from "index";
+import auth from "data/auth";
 
 const BoxTitle = styled(Box)(({ theme }) => ({
   borderRadius: theme.spacing(1),
@@ -37,11 +38,22 @@ function AdminAuth({ history }) {
     password: "",
   });
 
+  React.useEffect(() => {
+    localStorage.clear();
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (state.username && state.password) {
-      snack.success("Sucesso ao Logar!");
-      history.push("/admin/dashboard");
+      auth
+        .login(state)
+        .then((res) => {
+          snack.success("Sucesso ao Logar!");
+          history.push("/admin/dashboard");
+        })
+        .catch((err) => {
+          snack.error("Usuário ou Senha Inválidos :( ");
+        });
     } else {
       snack.error("Usuário ou Senha Inválidos :( ");
     }
