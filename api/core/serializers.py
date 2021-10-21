@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from core.models import User, Pagamentos, Servicos, Endereco, Pessoa, Agendamento
+from drf_writable_nested.serializers import WritableNestedModelSerializer
 
 
 class UserSerializer(ModelSerializer):
@@ -30,14 +31,14 @@ class EnderecoSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class PessoaSerializer(ModelSerializer):
+class PessoaSerializer(WritableNestedModelSerializer):
 
     class Meta:
         model = Pessoa
         fields = '__all__'
 
 
-class AgendamentoSerializer(ModelSerializer):
+class AgendamentoSerializer(WritableNestedModelSerializer):
 
     class Meta:
         model = Agendamento

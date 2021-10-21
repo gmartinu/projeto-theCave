@@ -4,30 +4,36 @@ from core.models import User, Pagamentos, Servicos, Endereco, Pessoa, Agendament
 
 
 class UserViewSet(ModelViewSet):
-    queryset = User.objects.order_by('pk')
+    queryset = User.objects.all()
+    filter_fields = '__all__'
     serializer_class = UserSerializer
 
 
 class PagamentosViewSet(ModelViewSet):
-    queryset = Pagamentos.objects.order_by('pk')
+    queryset = Pagamentos.objects.all()
+    filter_fields = '__all__'
     serializer_class = PagamentosSerializer
 
 
 class ServicosViewSet(ModelViewSet):
-    queryset = Servicos.objects.order_by('pk')
+    queryset = Servicos.objects.all()
+    filter_fields = '__all__'
     serializer_class = ServicosSerializer
 
 
 class EnderecoViewSet(ModelViewSet):
-    queryset = Endereco.objects.order_by('pk')
+    queryset = Endereco.objects.all()
+    filter_fields = '__all__'
     serializer_class = EnderecoSerializer
 
 
 class PessoaViewSet(ModelViewSet):
-    queryset = Pessoa.objects.order_by('pk')
+    queryset = Pessoa.objects.all()
+    filter_fields = '__all__'
     serializer_class = PessoaSerializer
 
 
 class AgendamentoViewSet(ModelViewSet):
-    queryset = Agendamento.objects.order_by('pk')
+    queryset = Agendamento.objects.all()
+    filter_fields = '__all__'
     serializer_class = AgendamentoSerializer
