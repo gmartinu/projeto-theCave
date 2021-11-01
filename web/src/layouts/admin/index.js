@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Redirect } from "react-router-dom";
-import { getActiveRoute, getCollapseStates, getRoutes } from "utils";
+import { getActiveRoute, getCollapseStates, getForms, getRoutes } from "utils";
 import { Box, styled } from "@mui/system";
 import { useHistory } from "react-router-dom";
 import { AdminRotes } from "routes";
@@ -238,6 +238,7 @@ export default function Admin() {
         <DrawerHeader />
         <Switch>
           {getRoutes("/admin", history, AdminRotes)}
+          {getForms("/admin", history, AdminRotes)}
           <Redirect from="/admin" to="/admin/login" />
         </Switch>
       </Box>

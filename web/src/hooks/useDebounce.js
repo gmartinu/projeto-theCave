@@ -15,6 +15,7 @@ export default function useDebounce(defaultValue) {
     }
     const timeId = setTimeout(later, 200);
     _setTimeout(timeId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultValue]);
 
   return debounce;
