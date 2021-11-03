@@ -14,6 +14,7 @@ import { Box, styled } from "@mui/system";
 import { Button, Paper, TextField } from "components";
 import PaginationComponent from "components/pagination";
 import { useDebounce } from "hooks";
+import { AppContext } from "index";
 import React from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { goToAddPage } from "utils/go2AddPage";
@@ -25,14 +26,24 @@ const ColoredCell = styled(TableCell)(({ theme }) => ({
 export default function MainList({ model, params, columns }) {
   const history = useHistory();
   const { path } = useRouteMatch();
-
+  const { dialog, snack } = React.useContext(AppContext)
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = React.useState("");
   const _debounce = useDebounce(search);
-  const { data: dataModel } = model.useModel({
+  const { data: dataModel, mutate } = model.useModel({
     page: page,
     search: _debounce ? _debounce : undefined,
   });
+
+  const removeData = (row) => {
+    dialog.showConfirm(`'Você deseja remover: "${row.nome}"" da lista ?`, "Atenção", () => {
+      model.delete(row.id).then(() => {
+        mutate();
+        snack.success("Removido com sucesso!")
+      }).catch(() => {
+        snack.error("Por favor, contatar o suporte.")
+      })
+    }, )}
 
   return (
     <>
@@ -84,7 +95,7 @@ export default function MainList({ model, params, columns }) {
             </TableHead>
             <TableBody>
               {dataModel?.rows?.map((row, key) => (
-                <TableRow key={key}>
+                <TableRow key={key} style={{ height: 43.39}}>
                   {columns.map((column, i) => (
                     <TableCell key={i}>
                       {typeof column.acessor === "function"
@@ -99,7 +110,9 @@ export default function MainList({ model, params, columns }) {
                     >
                       <Edit fontSize="small" />
                     </IconButton>
-                    <IconButton size="small">
+                    <IconButton size="small"
+                      onClick={() => removeData(row)}
+                    >
                       <Delete fontSize="small" />
                     </IconButton>
                   </TableCell>

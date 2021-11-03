@@ -32,6 +32,7 @@ class EnderecoSerializer(ModelSerializer):
 
 
 class PessoaSerializer(WritableNestedModelSerializer):
+    enderecos = EnderecoSerializer(many = True)
 
     class Meta:
         model = Pessoa

@@ -6,7 +6,7 @@ import { normalize_cpf_cnpj } from "utils";
 // import { Container } from './styles';
 
 function ListClientes() {
-  return <MainList columns={[
+  return (<MainList columns={[
     {
       Header: "Nome",
       acessor: 'nome'
@@ -19,7 +19,7 @@ function ListClientes() {
       Header: "Data de Nascimento",
       acessor: (row) => new Date(row.data_nascimento).format('DD/MM/YYYY')
     },
-  ]} model={C_Clientes} />;
+  ]} model={C_Clientes} />);
 }
 
 export default ListClientes;
