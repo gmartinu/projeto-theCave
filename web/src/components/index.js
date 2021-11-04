@@ -11,3 +11,5 @@ export { default as Accordion } from './accordion';
 export { default as ExpEndereco } from './shared/endereco';
 export { default as CheckBox } from './checkbox';
 export { default as Select } from './select';
+export { default as Autocomplete } from './autocomplete';
+export { default as UniversalAuto } from './autocomplete/export';

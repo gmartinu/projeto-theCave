@@ -1,0 +1,241 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/display-name */
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import ListSubheader from '@mui/material/ListSubheader';
+import { useTheme } from '@mui/material/styles';
+import { VariableSizeList } from 'react-window';
+import { Autocomplete, CircularProgress, Typography } from '@mui/material';
+import { useDebounce } from 'hooks';
+
+const LISTBOX_PADDING = 8; // px
+
+function renderRow(props) {
+  const { data, index, style } = props;
+  return React.cloneElement(data[index], {
+    style: {
+      ...style,
+      top: style.top + LISTBOX_PADDING,
+    },
+  });
+}
+
+const OuterElementContext = React.createContext({});
+
+const OuterElementType = React.forwardRef((props, ref) => {
+  const outerProps = React.useContext(OuterElementContext);
+  return <div ref={ref} {...props} {...outerProps} />;
+});
+
+function useResetCache(data) {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    if (ref.current != null) {
+      ref.current.resetAfterIndex(0, true);
+    }
+  }, [data]);
+  return ref;
+}
+
+// Adapter for react-window
+const ListboxComponent = React.forwardRef(function ListboxComponent(
+  props,
+  ref
+) {
+  const { children, ...other } = props;
+  const itemData = React.Children.toArray(children);
+  const theme = useTheme();
+  const smUp = useMediaQuery(theme.breakpoints.up('sm'), { noSsr: true });
+  const itemCount = itemData.length;
+  const itemSize = smUp ? 36 : 48;
+
+  const getChildSize = (child) => {
+    if (React.isValidElement(child) && child.type === ListSubheader) {
+      return 48;
+    }
+
+    return itemSize;
+  };
+
+  const getHeight = () => {
+    if (itemCount > 8) {
+      return 8 * itemSize;
+    }
+    return itemData.map(getChildSize).reduce((a, b) => a + b, 0);
+  };
+
+  const gridRef = useResetCache(itemCount);
+
+  return (
+    <div ref={ref}>
+      <OuterElementContext.Provider value={other}>
+        <VariableSizeList
+          itemData={itemData}
+          height={getHeight() + 2 * LISTBOX_PADDING}
+          width="100%"
+          ref={gridRef}
+          outerElementType={OuterElementType}
+          innerElementType="ul"
+          itemSize={(index) => getChildSize(itemData[index])}
+          overscanCount={5}
+          itemCount={itemCount}
+        >
+          {renderRow}
+        </VariableSizeList>
+      </OuterElementContext.Provider>
+    </div>
+  );
+});
+
+ListboxComponent.propTypes = {
+  children: PropTypes.node,
+};
+
+// function random(length) {
+//   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+//   let result = '';
+
+//   for (let i = 0; i < length; i += 1) {
+//     result += characters.charAt(Math.floor(Math.random() * characters.length));
+//   }
+
+//   return result;
+// }
+
+
+// const OPTIONS = Array.from(new Array(10000))
+//   .map(() => random(10 + Math.ceil(Math.random() * 20)))
+//   .sort((a, b) => a.toUpperCase().localeCompare(b.toUpperCase()));
+
+const defaultRenderGroup = (params) => [
+  <ListSubheader key={params.key} component="div">
+    {params.group}
+  </ListSubheader>,
+  params.children,
+];
+
+export default function Virtualize(props) {
+  const [inputValue, setInputValue] = React.useState('');
+  const debounce = useDebounce(inputValue);
+  const [internalValue, setInternalValue] = React.useState(null);
+  // const [internalOptions, setInternalOptions] = React.useState([]);
+  const {
+    helperText,
+    value,
+    array,
+    renderGroup,
+    required,
+    variant,
+    getOptionLabel,
+    options,
+    onChange,
+    valueKey,
+    name,
+    label,
+    onInputChange,
+    model,
+    inputProps,
+    params,
+    filter,
+    readOnly,
+    ...rest
+  } = props;
+
+  const { data: internalOptions } = model.useModel({
+    ...params,
+    search: debounce,
+    page_size: 50,
+  });
+
+  React.useEffect(() => {
+    if (value && internalOptions?.rows) {
+      internalOptions?.rows.map((item) => {
+        if (item[valueKey] === value) {
+          setInputValue(item[getOptionLabel]);
+          setInternalValue(item[getOptionLabel]);
+        }
+        return null;
+      });
+    }
+    // eslint-disable-next-line
+  }, [value, internalOptions?.rows]);
+
+  const openTest = readOnly ? { open: false, closeIcon: <> </> } : null;
+
+  return (
+    <Autocomplete
+      {...openTest}
+      loading={!internalOptions}
+      id="virtualize-demo"
+      value={internalValue}
+      inputValue={inputValue}
+      onChange={(event, value) => {
+        setInternalValue(value ? value[getOptionLabel] : null);
+        // if (array) onChange(array, value ? value : null, true);
+        return onChange
+          ? onChange(
+              {
+                target: {
+                  name: name,
+                  value: value ? value[valueKey] : null,
+                },
+              },
+              value
+            )
+          : null;
+        // return onChange ? onChange(name,, true) : null;
+      }}
+      onInputChange={(event, newInputValue) => {
+        setInputValue(newInputValue);
+        if (onInputChange) {
+          onInputChange(event, newInputValue);
+        }
+      }}
+      getOptionSelected={(option, value) => {
+        if (option[getOptionLabel] === value) return option;
+        return;
+      }}
+      fullWidth
+      disableListWrap
+      ListboxComponent={ListboxComponent}
+      renderGroup={renderGroup ? renderGroup : defaultRenderGroup}
+      options={
+        (filter
+          ? internalOptions?.rows?.filter(filter)
+          : internalOptions?.rows) || []
+      }
+      getOptionLabel={(option) =>
+        option === inputValue ? inputValue : option[getOptionLabel]
+      }
+      renderInput={(params) => (
+        <TextField
+          inputProps={inputProps}
+          helperText={helperText}
+          required={required ? true : false}
+          {...params}
+          variant={variant ? variant : 'standard'}
+          label={label ? label : 'Label Default'}
+          InputProps={{
+            ...params.InputProps,
+            readOnly: readOnly ? readOnly : false,
+            endAdornment: (
+              <React.Fragment>
+                {!internalOptions ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}
+                {params.InputProps.endAdornment}
+              </React.Fragment>
+            ),
+          }}
+        />
+      )}
+      renderOption={(option) => (
+        <Typography noWrap>{option[getOptionLabel]}</Typography>
+      )}
+      {...rest}
+    />
+  );
+}

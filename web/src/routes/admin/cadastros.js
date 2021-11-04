@@ -3,16 +3,19 @@ import {
   ManageAccounts,
   Person,
   Schedule,
+  HomeRepairService
 } from "@mui/icons-material";
 import {
   FormAgendamentos,
   FormClientes,
   FormFuncionarios,
   FormGerentes,
+  FormServicos,
   ListAgendamentos,
   ListClientes,
   ListFuncionarios,
   ListGerentes,
+  ListServicos,
 } from "views/admin/cadastros";
 
 const Cadastros_Admin = [
@@ -46,6 +49,14 @@ const Cadastros_Admin = [
     component: ListAgendamentos,
     form: FormAgendamentos,
     Icon: Schedule,
+    layout: "/admin",
+  },
+  {
+    path: "/cadastros/servicos",
+    name: "Serviços",
+    component: ListServicos,
+    form: FormServicos,
+    Icon: HomeRepairService,
     layout: "/admin",
   },
 ];

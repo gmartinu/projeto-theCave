@@ -40,6 +40,10 @@ class PessoaSerializer(WritableNestedModelSerializer):
 
 
 class AgendamentoSerializer(WritableNestedModelSerializer):
+    # cliente = PessoaSerializer()
+    # funcionario = PessoaSerializer()
+    pagamentos = PagamentosSerializer(allow_null=True)
+    servicos = ServicosSerializer(many = True)
 
     class Meta:
         model = Agendamento

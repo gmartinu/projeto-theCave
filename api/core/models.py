@@ -99,25 +99,28 @@ class Agendamento(models.Model):
                  (5, 'Cancelado')),
         null=True, blank=True
     )
-    cliente = models.ManyToManyField(
+    cliente = models.ForeignKey(
         'core.Pessoa',
-        # on_delete=models.PROTECT,
+        on_delete=models.PROTECT,
         related_name='cliente_agendamentos',
         default=None,
+        null=True,
         blank=True
     )
-    funcionario = models.ManyToManyField(
+    funcionario = models.ForeignKey(
         'core.Pessoa',
-        # on_delete=models.PROTECT,
+        on_delete=models.PROTECT,
         related_name='funcionario_agendamentos',
         default=None,
+        null=True,
         blank=True
     )
-    pagamentos = models.ManyToManyField(
+    pagamentos = models.ForeignKey(
         'core.Pagamentos',
-        # on_delete=models.PROTECT,
+        on_delete=models.PROTECT,
         related_name='agendamento',
         default=None,
+        null=True,
         blank=True
     )
     servicos = models.ManyToManyField(

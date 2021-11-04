@@ -9,3 +9,6 @@ export { default as FormFuncionarios } from "./funcionarios/form";
 
 export { default as ListGerentes } from "./gerentes/list";
 export { default as FormGerentes } from "./gerentes/form";
+
+export { default as ListServicos } from './servicos/list';
+export { default as FormServicos } from './servicos/form';
