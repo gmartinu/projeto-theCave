@@ -21,7 +21,8 @@ import {
   Typography,
   List,
 } from "@mui/material";
-import { ExpandLess, ExpandMore, Menu } from "@mui/icons-material";
+import { ExpandLess, ExpandMore, Menu, Person } from "@mui/icons-material";
+import { Button } from "components";
 
 const drawerWidth = 240;
 
@@ -204,21 +205,41 @@ export default function Admin() {
     <Root>
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: "36px",
-              ...(open && { display: "none" }),
-            }}
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            style={{ width: "100%" }}
           >
-            <Menu />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            {getActiveRoute(AdminRotes).name}
-          </Typography>
+            <Box>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                sx={{
+                  marginRight: "36px",
+                  ...(open && { display: "none" }),
+                }}
+              >
+                <Menu />
+              </IconButton>
+            </Box>
+            <Box flexGrow={1}>
+              <Typography variant="h6" noWrap component="div">
+                {getActiveRoute(AdminRotes).name}
+              </Typography>
+            </Box>
+            <Box>
+              <Button
+                variant="outlined"
+                onClick={() => history.push("/auth")}
+                style={{ color: "white", borderColor: "white" }}
+              >
+                Sair
+              </Button>
+            </Box>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

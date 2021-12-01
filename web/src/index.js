@@ -192,7 +192,7 @@ const App = () => {
               <Route path="/client" component={ClientLayout} />
               <Route path="/admin" component={AdminLayout} />
               <Route path="/auth" component={AuthLayout} />
-              <Redirect from="/" to="/auth" />
+              <Redirect from="/" to="/client" />
             </Switch>
           </Router>
         </AppContext.Provider>

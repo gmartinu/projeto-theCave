@@ -124,9 +124,9 @@ REST_FRAMEWORK = {
     ),
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_PAGINATION_CLASS': 'core.pagination.StandardResultsSetPagination', # <- CUSTOM PAGINATION
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+        # 'rest_framework.permissions.IsAuthenticated',
+    # ),
     'DEFAULT_FILTER_BACKENDS': (
         # 'rest_framework_filters.backends.RestFrameworkFilterBackend',
         'rest_framework.filters.SearchFilter',
@@ -134,6 +134,8 @@ REST_FRAMEWORK = {
         'url_filter.integrations.drf.DjangoFilterBackend'
     ),
     'ORDERING_PARAM': 'sorting',
+    'UNAUTHENTICATED_USER': None,
+
 }
 
 # AUTH USER MODEL

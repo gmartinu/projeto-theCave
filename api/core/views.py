@@ -28,6 +28,7 @@ class EnderecoViewSet(ModelViewSet):
 
 
 class PessoaViewSet(ModelViewSet):
+    authentication_classes = []
     queryset = Pessoa.objects.all()
     filter_fields = '__all__'
     serializer_class = PessoaSerializer
